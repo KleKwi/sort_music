@@ -10,14 +10,14 @@ import (
 )
 
 func main() {
-	src := os.Args[1]+"/"
-	out := os.Args[2]+"/"
+	src := os.Args[1]+string(os.PathSeparator)
+	out := os.Args[2]+string(os.PathSeparator)
 	list := getMusic(os.Args[1])
 	for _, file := range list {
 		title, artist := getTag(src+file)
 		fmt.Println(title, artist)
 		os.Mkdir(out+artist, os.ModePerm)
-		err := os.Rename(src+file, out+artist+"/"+file)
+		err := os.Rename(src+file, out+artist+string(os.PathSeparator)+file)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -33,6 +33,7 @@ func getTag(f string) (string, string) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	file.Close()
 	return m.Title(), m.Artist()
 }
 
@@ -40,7 +41,7 @@ func getMusic(rootpath string) []string {
 
 	baseName := []string{}
 
-	musicExt := []string{".flac", ".mp4", "m4a"}
+	musicExt := []string{".flac", ".mp3", ".m4a"}
 
 	err := filepath.Walk(rootpath, func(path string, info os.FileInfo, err error) error {
 		if info.IsDir() {
