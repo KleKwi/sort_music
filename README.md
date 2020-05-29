@@ -1,3 +1,3 @@
 # sort_music
 
-sour music files by putting in their artist folder.
+sort music files by putting in their artist folder.
