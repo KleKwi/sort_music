@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/dhowden/tag"
 	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/dhowden/tag"
 )
 
 func main() {
@@ -26,11 +27,11 @@ func main() {
 func getTag(f string) (string, string) {
 	file, err := os.OpenFile(f, os.O_RDONLY, 0755)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 	m, err := tag.ReadFrom(file)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 	file.Close()
 	return m.Title(), m.Artist()
@@ -54,7 +55,7 @@ func getMusic(rootpath string) []string {
 		return nil
 	})
 	if err != nil {
-		fmt.Printf("walk error [%v]\n", err)
+		log.Fatalf("walk error [%v]\n", err)
 	}
 	return baseName
 }
