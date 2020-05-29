@@ -1,20 +1,19 @@
 package main
 
 import (
-	"log"
 	"fmt"
+	"github.com/dhowden/tag"
+	"log"
 	"os"
 	"path/filepath"
-
-	"github.com/dhowden/tag"
 )
 
 func main() {
-	src := os.Args[1]+string(os.PathSeparator)
-	out := os.Args[2]+string(os.PathSeparator)
+	src := os.Args[1] + string(os.PathSeparator)
+	out := os.Args[2] + string(os.PathSeparator)
 	list := getMusic(os.Args[1])
 	for _, file := range list {
-		title, artist := getTag(src+file)
+		title, artist := getTag(src + file)
 		fmt.Println(title, artist)
 		os.Mkdir(out+artist, os.ModePerm)
 		err := os.Rename(src+file, out+artist+string(os.PathSeparator)+file)
